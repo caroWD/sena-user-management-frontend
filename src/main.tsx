@@ -4,11 +4,14 @@ import './index.css'
 import { ThemeProvider } from '@/components/theme-provider.tsx'
 import { RouterProvider } from 'react-router'
 import { routes } from './routes.ts'
+import { TooltipProvider } from './components/ui/tooltip.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <RouterProvider router={routes} />
+      <TooltipProvider>
+        <RouterProvider router={routes} />
+      </TooltipProvider>
     </ThemeProvider>
   </StrictMode>
 )
