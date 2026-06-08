@@ -14,6 +14,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { VITE_API_HOST, VITE_API_VERSION } from '@/config'
+import { useFetch } from '@/hooks/use-fetch'
+import { useProfileStore, type UserProfile } from '@/stores/use-profile-store'
 import {
   IconBell,
   IconCreditCard,
@@ -35,6 +38,12 @@ interface NavUserProps {
 
 const NavUser = ({ user }: NavUserProps) => {
   const { isMobile } = useSidebar()
+  const auth = useProfileStore((state) => state.auth)
+  const { data, loading, error } = useFetch<UserProfile>(
+    `${VITE_API_HOST}${VITE_API_VERSION}/user/${auth?.id}`
+  )
+
+  console.log(data, loading, error)
 
   return (
     <SidebarMenu>

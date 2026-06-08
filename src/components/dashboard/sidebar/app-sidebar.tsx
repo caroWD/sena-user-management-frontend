@@ -23,8 +23,22 @@ import { NavLink } from 'react-router'
 import NavUser from './nav-user'
 import NavSecondary from './nav-secondary'
 import NavMain from './nav-main'
+import { useToken } from '@/hooks/use-token'
+import { useProfileStore, type AuthProfile } from '@/stores/use-profile-store'
 
-const AppSidebar = ({ ...props }: ComponentProps<typeof Sidebar>) => {
+interface AppSidebarProps {
+  token: string
+}
+
+const AppSidebar = ({
+  token,
+  ...props
+}: AppSidebarProps & ComponentProps<typeof Sidebar>) => {
+  const { data, loading } = useToken<AuthProfile>(token)
+  const setAuth = useProfileStore((state) => state.setAuth)
+
+  if (!loading && data) setAuth(data)
+
   return (
     <Sidebar variant="floating" collapsible="icon" {...props}>
       <SidebarHeader>
